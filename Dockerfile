@@ -4,8 +4,8 @@ FROM httpd:latest
 # Informations sur le mainteneur
 LABEL maintainer="k.faiez@hotmail.fr"
 
-# Installation de l'utilitaire unrar (si votre image utilise apt)
-RUN apt-get update && apt-get install -y unrar
+# Installation de l'utilitaire unzip (si nécessaire)
+RUN apt-get update && apt-get install -y unzip
 
 # Copie du fichier RAR distant dans le répertoire /usr/local/apache2/htdocs/
 COPY inance-html.rar /usr/local/apache2/htdocs/
@@ -14,8 +14,9 @@ COPY inance-html.rar /usr/local/apache2/htdocs/
 WORKDIR /usr/local/apache2/htdocs/
 
 # Extraction du contenu du fichier RAR
-RUN unrar x inance-html.rar && \
+RUN unzip inance-html.rar && \
     rm inance-html.rar
+
 
 
 
