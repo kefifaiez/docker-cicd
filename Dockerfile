@@ -1,35 +1,23 @@
-# Utilisation de l'image Ubuntu comme base
-FROM ubuntu:latest
+# Utilisation de l'image Apache officielle
+FROM httpd:latest
 
 # Informations sur le mainteneur
 LABEL maintainer="k.faiez@hotmail.fr"
 
-# Mise à jour des paquets et installation d'Apache, zip et unzip
-RUN apt-get update && \
-    apt-get install -y apache2 zip unzip
+# Téléchargement du fichier ZIP distant et extraction du contenu dans le répertoire /usr/local/apache2/htdocs/
+ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /usr/local/apache2/htdocs/
 
-# Création du répertoire /var/www/html/ s'il n'existe pas
-RUN mkdir -p /var/www/html/
-
-# Changement du répertoire de travail à /var/www/html/
-WORKDIR /var/www/html/
-
-# Téléchargement du fichier ZIP distant et extraction du contenu dans le répertoire actuel
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip .
+# Changement du répertoire de travail à /usr/local/apache2/htdocs/
+WORKDIR /usr/local/apache2/htdocs/
 
 # Extraction du contenu du fichier ZIP
 RUN unzip photogenic.zip && \
     rm photogenic.zip
 
-# Copie des fichiers extraits dans le répertoire d'Apache
-RUN cp -r * /var/www/html/ && \
-    chown -R www-data:www-data /var/www/html/
+# Exposition du port 80 (inutile car cela est déjà défini dans l'image httpd)
+# EXPOSE 80
 
-# Commande de démarrage pour Apache
-CMD ["apache2ctl", "-D", "FOREGROUND"]
-
-# Exposition du port 80
-EXPOSE 80
+# Aucune nécessité de spécifier CMD, car l'image httpd définit déjà une commande par défaut pour démarrer Apache
 
 
  
