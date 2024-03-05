@@ -17,10 +17,12 @@ WORKDIR /var/www/html/
 # Téléchargement du fichier ZIP distant et extraction du contenu dans le répertoire actuel
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip .
 
-# Extraction du contenu du fichier ZIP et nettoyage
+# Extraction du contenu du fichier ZIP
 RUN unzip photogenic.zip && \
-    rm photogenic.zip && \
-    mv * /var/www/html/ && \
+    rm photogenic.zip
+
+# Copie des fichiers extraits dans le répertoire d'Apache
+RUN cp -r * /var/www/html/ && \
     chown -R www-data:www-data /var/www/html/
 
 # Commande de démarrage pour Apache
