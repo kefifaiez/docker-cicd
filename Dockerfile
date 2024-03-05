@@ -4,6 +4,9 @@ FROM httpd:latest
 # Informations sur le mainteneur
 LABEL maintainer="k.faiez@hotmail.fr"
 
+# Installation de l'utilitaire unzip
+RUN apt-get update && apt-get install -y unzip
+
 # Téléchargement du fichier ZIP distant et extraction du contenu dans le répertoire /usr/local/apache2/htdocs/
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /usr/local/apache2/htdocs/
 
@@ -14,10 +17,6 @@ WORKDIR /usr/local/apache2/htdocs/
 RUN unzip photogenic.zip && \
     rm photogenic.zip
 
-# Exposition du port 80 (inutile car cela est déjà défini dans l'image httpd)
-# EXPOSE 80
-
-# Aucune nécessité de spécifier CMD, car l'image httpd définit déjà une commande par défaut pour démarrer Apache
 
 
  
