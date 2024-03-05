@@ -7,14 +7,14 @@ LABEL maintainer="k.faiez@hotmail.fr"
 # Installation de l'utilitaire unzip (si nécessaire)
 RUN apt-get update && apt-get install -y unzip
 
-# Copie du fichier RAR distant dans le répertoire /usr/local/apache2/htdocs/
+# Copie du fichier ZIP distant dans le répertoire /usr/local/apache2/htdocs/
 COPY inance-html.zip /usr/local/apache2/htdocs/
 
 # Changement du répertoire de travail à /usr/local/apache2/htdocs/
 WORKDIR /usr/local/apache2/htdocs/
 
-# Extraction du contenu du fichier RAR
-RUN unzip inance-html.zip && \
+# Extraction du contenu du fichier ZIP avec remplacement
+RUN unzip -o inance-html.zip && \
     rm inance-html.zip
 
 
