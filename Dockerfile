@@ -4,18 +4,19 @@ FROM httpd:latest
 # Informations sur le mainteneur
 LABEL maintainer="k.faiez@hotmail.fr"
 
-# Installation de l'utilitaire unzip
-RUN apt-get update && apt-get install -y unzip
+# Installation de l'utilitaire unrar
+RUN apk update && apk add --no-cache unrar
 
-# Téléchargement du fichier ZIP distant et extraction du contenu dans le répertoire /usr/local/apache2/htdocs/
-ADD inance-html.rar /usr/local/apache2/htdocs/
+# Copie du fichier RAR distant dans le répertoire /usr/local/apache2/htdocs/
+COPY inance-html.rar /usr/local/apache2/htdocs/
 
 # Changement du répertoire de travail à /usr/local/apache2/htdocs/
 WORKDIR /usr/local/apache2/htdocs/
 
-# Extraction du contenu du fichier ZIP
-RUN unzip inance-html.rar && \
+# Extraction du contenu du fichier RAR
+RUN unrar x inance-html.rar && \
     rm inance-html.rar
+
 
 
 
