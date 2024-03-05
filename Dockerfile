@@ -8,14 +8,14 @@ LABEL maintainer="k.faiez@hotmail.fr"
 RUN apt-get update && apt-get install -y unzip
 
 # Téléchargement du fichier ZIP distant et extraction du contenu dans le répertoire /usr/local/apache2/htdocs/
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /usr/local/apache2/htdocs/
+ADD inance-html.rar /usr/local/apache2/htdocs/
 
 # Changement du répertoire de travail à /usr/local/apache2/htdocs/
 WORKDIR /usr/local/apache2/htdocs/
 
 # Extraction du contenu du fichier ZIP
-RUN unzip photogenic.zip && \
-    rm photogenic.zip
+RUN unzip inance-html.rar && \
+    rm inance-html.rar
 
 
 
