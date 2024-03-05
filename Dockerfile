@@ -1,3 +1,4 @@
+# Utilisation de l'image Ubuntu comme base
 FROM ubuntu:latest
 
 # Informations sur le mainteneur
@@ -7,21 +8,27 @@ LABEL maintainer="k.faiez@hotmail.fr"
 RUN apt-get update && \
     apt-get install -y apache2 zip unzip
 
-# Ajout du fichier ZIP distant au répertoire /var/www/html/
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
+# Création du répertoire /var/www/html/ s'il n'existe pas
+RUN mkdir -p /var/www/html/
 
 # Changement du répertoire de travail à /var/www/html/
 WORKDIR /var/www/html/
 
-# Extraction du contenu du fichier ZIP
+# Téléchargement du fichier ZIP distant et extraction du contenu dans le répertoire actuel
+ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip .
+
+# Extraction du contenu du fichier ZIP et nettoyage
 RUN unzip photogenic.zip && \
-    rm photogenic.zip
+    rm photogenic.zip && \
+    mv * /var/www/html/ && \
+    chown -R www-data:www-data /var/www/html/
 
 # Commande de démarrage pour Apache
 CMD ["apache2ctl", "-D", "FOREGROUND"]
 
 # Exposition du port 80
 EXPOSE 80
+
 
  
  
